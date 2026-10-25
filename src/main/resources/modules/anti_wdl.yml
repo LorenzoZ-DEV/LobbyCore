@@ -1,0 +1,17 @@
+config-version: 1
+# Blocco di World Downloader.
+#
+# La mod si annuncia da sola su un canale plugin e chiede al server cosa puo fare:
+# rispondiamo "niente". E il modo previsto dal protocollo, non un trucco.
+#
+# Da sapere: non esiste modo di impedire a un client determinato di copiare i chunk che
+# gli sono stati inviati. Questo ferma il caso a un click, che e il 99% dei tentativi.
+
+anti_wdl:
+  # true = espelle chi ha la mod (messaggio wdl-kick in messages.yml).
+  # false = manda solo l'avviso e rifiuta il download.
+  kick: false
+
+  # Azioni extra quando viene rilevata la mod. Utile per avvisare lo staff:
+  #   - "[CONSOLE_CMD] staffchat WDL rilevato su %player%"
+  actions: []

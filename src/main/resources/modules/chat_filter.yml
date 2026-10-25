@@ -1,0 +1,41 @@
+config-version: 1
+# Moderazione della chat.
+#
+# Gira PRIMA del modulo chat: un messaggio bloccato qui non viene mai inviato e,
+# soprattutto, non viene mai pubblicato su Redis. Una volta sul bus sarebbe gia su
+# tutte le lobby e nessun filtro locale potrebbe piu richiamarlo indietro.
+#
+# Chi ha lobbycore.chat.bypass non passa da qui.
+
+chat_filter:
+
+  word_filter:
+    enabled: true
+    # true = il messaggio non viene inviato. false = avvisa ma lo lascia passare.
+    block_message: true
+    # Il confronto avviene su una copia normalizzata del messaggio: minuscole, cifre
+    # e simboli ricondotti alle lettere (@ e 4 -> a, 3 -> e, 0 -> o, $ -> s),
+    # punteggiatura tolta e lettere ripetute ridotte a una. Scrivi le parole in chiaro:
+    # le varianti le gestisce il filtro.
+    words:
+      - "esempio"
+
+  command_block:
+    enabled: true
+    # Funziona anche con il prefisso del plugin: /plugins e /bukkit:plugins sono
+    # entrambi bloccati scrivendo solo "plugins".
+    commands:
+      - "plugins"
+      - "pl"
+      - "help"
+      - "about"
+      - "ver"
+      - "version"
+      - "icanhasbukkit"
+
+  cooldown:
+    enabled: true
+    seconds: 2
+
+  anti_repeat:
+    enabled: true

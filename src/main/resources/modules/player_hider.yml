@@ -1,0 +1,27 @@
+config-version: 1
+# Nascondi giocatori.
+#
+# La preferenza viene salvata nel database: resta dopo un relog e, se usi MySQL, segue
+# il giocatore anche nelle altre lobby.
+#
+# Chi ha lobbycore.hider.bypass resta sempre visibile (utile per lo staff).
+
+player_hider:
+  slot: 8
+  disable_inventory_movement: true
+  # Secondi fra un toggle e l'altro: nascondere e mostrare tutti e un'operazione costosa
+  # e senza cooldown un giocatore puo farla ripetutamente.
+  cooldown: 4
+  sound: UI_BUTTON_CLICK
+
+  not_hidden:
+    material: LIME_DYE
+    amount: 1
+    display_name: "&eGiocatori &8➥ &aVisibili &7[Click Destro]"
+    lore: []
+
+  hidden:
+    material: RED_DYE
+    amount: 1
+    display_name: "&eGiocatori &8➥ &cNascosti &7[Click Destro]"
+    lore: []

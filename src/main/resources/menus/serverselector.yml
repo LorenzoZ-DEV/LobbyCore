@@ -1,0 +1,102 @@
+config-version: 1
+# Server Selector.
+#
+# L'ID di questo menu e il nome del file: si apre con l'azione "[MENU] serverselector".
+# Per aggiungerne uno nuovo basta creare un altro file in questa cartella.
+#
+# TESTE DI GIOCATORE
+#   material: PLAYER_HEAD + una fra:
+#     username: <nome>     (il giocatore deve essere gia entrato almeno una volta)
+#     base64: <stringa>    (quella dei siti di head database)
+#
+# SLOT
+#   slot: 10          un singolo slot
+#   slots: [0, 1, 2]  piu slot
+#   slot: -1          riempie tutti gli slot rimasti vuoti (filler)
+#
+# CLICK
+#   actions:                     qualsiasi click
+#   left_click_actions:          solo click sinistro
+#   right_click_actions:         solo click destro
+#   shift_left_click_actions:    ecc.
+#   Se ci sono entrambe, quella specifica vince su actions.
+#
+# PERMESSI
+#   permission: "grado.vip"
+#   hide_without_permission: true   (false = si vede ma non fa niente)
+#
+# AZIONI: le stesse degli item hotbar. Vedi modules/custom_join_items.yml per l'elenco.
+
+slots: 27
+title: "&8Server Selector"
+
+# Ridisegna il menu aperto, per tenere aggiornati i contatori online.
+# rate e in tick, arrotondato al secondo.
+refresh:
+  enabled: true
+  rate: 40
+
+items:
+  filler:
+    material: GRAY_STAINED_GLASS_PANE
+    slot: -1
+    display_name: " "
+
+  survival:
+    material: SPYGLASS
+    slot: 10
+    amount: 1
+    glow: false
+    display_name: '&x&2&7&b&9&f&8&lSMP'
+    lore:
+      - '&x&7&f&7&f&7&fVersione: 1.21.11+'
+      - ''
+      - '&7Connettiti alla SMP piu competitiva'
+      - '&7d''Italia.'
+      - ''
+      - '&x&2&9&f&8&8&1⛏ &fOnline: &x&2&9&f&8&8&1%bungee_smp-s4%'
+      - '&x&6&e&f&8&f&0⚑ &fSeason: &x&6&e&f&8&f&0#4'
+      - '&x&e&4&f&8&4&1⌚ &fRilasciata: &x&e&4&f&8&4&13 Agosto 2026'
+      - ''
+      - '&x&2&7&b&9&f&8➡ &x&2&7&b&9&f&8&l&nCLICK&r &x&2&7&b&9&f&8per entrare nella &fSMP&x&2&7&b&9&f&8!'
+    actions:
+      - '[CLOSE]'
+      - '[PROXY] smp-s4'
+
+  sandbox:
+    material: DIAMOND_SWORD
+    slot: 13
+    amount: 1
+    glow: false
+    display_name: '&x&9&9&7&7&f&c&lSANDBOX'
+    lore:
+      - "&8Versione: 1.21.11+"
+      - ""
+      - "&x&2&9&f&8&8&1⛏ &fOnline: &x&2&9&f&8&8&1%bungee_sandbox%"
+      - "&x&6&e&f&8&f&0🏁 &fSeason: &#8EFAFA#1"
+      - "&x&e&4&f&8&4&1🕒 &fRilascio VIP: &e11/09/2026"
+      - "&x&e&4&f&8&4&1🕒 &fRilascio per tutti: &e12/09/2026"
+      - ""
+      - "&x&9&9&7&7&f&c➡ &x&9&9&7&7&f&c&l&nCLICK&r &x&9&9&7&7&f&cper entrare in &fSandbox&x&9&9&7&7&f&c!"
+    actions:
+      - '[CLOSE]'
+      - '[PROXY] sandbox'
+
+  eventi:
+    material: RED_DYE
+    custom_model_data: 6767
+    slot: 16
+    amount: 1
+    glow: false
+    display_name: '&x&f&8&2&b&2&b&lEVENTI'
+    lore:
+      - '&x&7&f&7&f&7&fVersione: 1.21.11+'
+      - ''
+      - '&x&2&9&f&8&8&1⛏ &fOnline: &x&2&9&f&8&8&1%bungee_evento-1%'
+      - '&x&6&e&f&8&f&0⚑ &fSeason: &x&6&e&f&8&f&0#1'
+      - '&x&e&4&f&8&4&1⌚ &fRilasci: &x&e&4&f&8&4&1Temporanei'
+      - ''
+      - '&x&f&8&2&b&2&b➡ &x&f&8&2&b&2&b&l&nCLICK&r &x&f&8&2&b&2&bper entrare in &fEventi&x&f&8&2&b&2&b!'
+    actions:
+      - '[CLOSE]'
+      - '[PROXY] evento-1'

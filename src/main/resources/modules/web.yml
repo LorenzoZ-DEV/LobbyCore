@@ -1,0 +1,93 @@
+config-version: 1
+# ==========================================================================================
+#  Pannello web di amministrazione.
+#
+#  Mostra stato del server, chi e' online e cosa ha fatto, gli errori catturati, e permette
+#  di modificare OGNI file di configurazione, accendere e spegnere i moduli e ricaricare.
+#
+#  ACCESSO
+#    In gioco:  /lobbycore panel  -> link con token usa e getta
+#    Fisso:     metti un token qui sotto e apri http://IP:porta/?token=IL_TUO_TOKEN
+#    Se non imposti un token ne viene generato uno a ogni avvio e stampato in console.
+#
+#  SICUREZZA
+#    Chi ha il token puo' modificare i config e spegnere i moduli. Non esporre la porta su
+#    internet senza un reverse proxy con HTTPS, oppure limita gli indirizzi qui sotto.
+#
+#  NOTA: modificare QUESTO file dal pannello non lo riavvia — sarebbe come segare il ramo su
+#  cui si e' seduti, la connessione che porta la richiesta cadrebbe a meta'. Per applicare
+#  host, porta o token: /lobbycore module web off e poi on, oppure riavvia il server.
+# ==========================================================================================
+
+web:
+  # 0.0.0.0 ascolta su tutte le interfacce, 127.0.0.1 solo in locale (piu' sicuro se usi
+  # un reverse proxy o un tunnel SSH).
+  host: "0.0.0.0"
+  port: 8085
+
+  # Se la porta e' occupata prova le successive. Serve quando piu' lobby girano sulla
+  # stessa macchina con lo stesso config: la porta scelta viene scritta in console.
+  port_scan_range: 20
+
+  auth:
+    # Vuoto = ne viene generato uno nuovo a ogni riavvio (lo trovi in console).
+    token: ""
+    # Quanto dura una sessione del browser, in minuti. Si rinnova mentre la tieni aperta.
+    session_minutes: 360
+    # Durata dei token usa e getta di /lobbycore panel.
+    ingame_token_minutes: 5
+    # Attivalo SOLO se il pannello sta dietro HTTPS: un cookie Secure su http non viene
+    # mai rimandato indietro e sembrerebbe che il login non funzioni.
+    secure_cookie: false
+
+  # Thread che servono le richieste HTTP. Quattro bastano per qualsiasi numero di admin.
+  worker_threads: 4
+  # Ogni quanti millisecondi il pannello riceve un aggiornamento.
+  stream_interval_ms: 1000
+  # Quante voci del log attivita' mandare al browser.
+  feed_limit: 200
+
+  security:
+    # Vuoto = qualsiasi indirizzo (protetto solo dal token). Altrimenti elenca IP o
+    # prefissi: "10.0." copre tutta la sottorete.
+    allowed_addresses: []
+    #  - "127.0.0.1"
+    #  - "10.0."
+
+    # Console remota: permette di eseguire QUALSIASI comando dal browser.
+    # Spenta di default — e' accesso da operatore via HTTP, dev'essere una scelta.
+    allow_console: false
+
+  ui:
+    title: "LobbyCore"
+    accent: "#9863E7"
+    # dark | light | auto (segue il sistema di chi guarda)
+    theme: "dark"
+
+    # Grafica. I file stanno dentro il jar in web/assets/; basta il nome.
+    # Accetta anche un URL http(s) se preferisci ospitarli altrove.
+    # Lascia vuoto ("") per non mostrare quell'elemento: il pannello resta coerente.
+    branding:
+      # Logo del server, in alto a destra e come icona della scheda.
+      logo: "assets/logo-server.png"
+      # Segno accanto al nome nella barra laterale. Vuoto = pastiglia con il colore accento.
+      mark: "assets/logo.png"
+      # Sfondo della pagina e della schermata di login.
+      # NOTA: background.png e' uno screenshot da 2,9 MB. Finisce dentro il jar e viene
+      # scaricato da ogni browser: se ti serve piu' leggero, ricomprimilo o passa a .webp.
+      background: "assets/background.png"
+      # Quanto si vede lo sfondo dietro il pannello. Oltre 0.2 i numeri diventano
+      # faticosi da leggere. Nella schermata di login si vede molto di piu' a prescindere.
+      background_opacity: 0.10
+      # Texture della barra laterale. Vuoto = tinta unita.
+      texture: "assets/navbar.png"
+    # Quali schede mostrare, nell'ordine che scrivi.
+    # Disponibili: overview, players, activity, errors, modules, config, tools
+    tabs:
+      - overview
+      - players
+      - activity
+      - errors
+      - modules
+      - config
+      - tools

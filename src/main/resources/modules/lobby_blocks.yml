@@ -1,0 +1,48 @@
+config-version: 1
+# Blocchi magici (fork di nLobbyBlocks).
+#
+# Il giocatore piazza blocchi che si crepano e spariscono da soli dopo break_after
+# secondi. Lo stack non si consuma mai: viene rimesso a posto ad ogni piazzamento.
+#
+# Nota: questo modulo e l'unica eccezione al divieto di piazzare blocchi del modulo
+# world-settings. Non serve mettere disable_block_place a false per farlo funzionare.
+
+lobby_blocks:
+  blocks_on_join: true
+  # Tick di attesa prima di consegnare i blocchi all'entrata.
+  join_give_delay: 20
+
+  block_type: MOSS_BLOCK
+  block_name: "&dʙʟᴏᴄᴄʜɪ ᴍᴀɢɪᴄɪ &7(ᴄʟɪᴄᴋ ᴅᴇꜱᴛʀᴏ)"
+  block_count: 64
+  hotbar_slot: 0
+
+  # Secondi prima che il blocco sparisca. L'animazione di rottura viene inviata solo a
+  # chi e entro 32 blocchi: piu in la sarebbe un pacchetto che nessuno vede.
+  break_after: 10
+
+  prevent_drop: true
+  prevent_move: true
+  prevent_off_hand_swap: true
+  # Impedisce anche di interagire con i blocchi piazzati (pulsanti, casse posate sopra).
+  prevent_block_interaction: false
+
+  sounds:
+    place:
+      enabled: false
+      sound: BLOCK_NOTE_BLOCK_PLING
+      volume: 1.0
+      pitch: 1.2
+    break:
+      enabled: false
+      sound: BLOCK_GRASS_BREAK
+      volume: 1.0
+      pitch: 1.0
+
+  # Dove si puo piazzare. Lista vuota = ovunque nei mondi lobby.
+  # Delimita sempre l'area se la lobby confina con una zona build.
+  regions: {}
+  #  cortile:
+  #    world: world
+  #    min: { x: -100, y: 60, z: -100 }
+  #    max: { x: 100, y: 100, z: 100 }

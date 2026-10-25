@@ -1,0 +1,23 @@
+config-version: 1
+# Chat (fork di RedisChat).
+#
+# Con cross_server attivo e Redis configurato in config.yml, i messaggi arrivano anche
+# alle altre lobby. Senza Redis il modulo funziona lo stesso, solo in locale.
+
+chat:
+  # {server} {prefix} {player} {message}
+  # La parte attorno a {message} viene interpretata per intero (colori, gradienti,
+  # MiniMessage). Il messaggio del giocatore no: quello passa da un parser ridotto che
+  # conosce solo colori e decorazioni, cosi nessuno puo infilare un <click:run_command>
+  # o un hover con payload costruito a mano dentro la chat.
+  format: "&8(&7&o{server}&8) {prefix}{player}&7: &f{message}"
+
+  cross_server: true
+  redis_channel: "lobbycore:chat"
+
+  # Colori nei messaggi per chi ha lobbycore.chat.color. A false nessuno li usa.
+  allow_formatting: true
+
+  # Completa con il TAB anche i nomi dei giocatori sulle altre lobby. Vale per ogni
+  # comando del server, non solo per i nostri.
+  tab_complete_sync: true

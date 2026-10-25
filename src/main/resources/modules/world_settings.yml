@@ -1,0 +1,49 @@
+config-version: 1
+# Protezione del mondo della lobby.
+#
+# Chi ha il permesso lobbycore.bypass.world non e soggetto a questo elenco, TRANNE
+# god_mode e il soccorso nel vuoto: quelli valgono per tutti. Il bypass serve per
+# costruire senza spegnere il modulo, non per morire.
+
+world_settings:
+
+  # --- Giocatore ---
+  # God mode per tutti nella lobby: nessun danno in nessun modo. Il PvP consensuale
+  # del modulo hub-pvp resta possibile: quello riabilita il danno solo fra due
+  # giocatori che l'hanno attivato entrambi.
+  god_mode: true
+  disable_hunger_loss: true
+  disable_fall_damage: true
+  # Puo restare true anche con il modulo hub-pvp acceso: quello gira a priorita piu alta e
+  # riabilita il danno solo fra due giocatori che hanno attivato il PvP entrambi.
+  disable_player_pvp: true
+  # Non uccide chi cade nel vuoto: lo rimanda allo spawn. Vale per tutti, anche con
+  # il bypass.
+  disable_void_death: true
+  disable_fire_damage: true
+  disable_drowning: true
+  disable_off_hand_swap: true
+
+  # --- Ambiente ---
+  disable_weather_change: true
+  disable_death_message: true
+  disable_mob_spawning: true
+
+  # --- Item a terra ---
+  disable_item_drop: true
+  disable_item_pickup: true
+
+  # --- Blocchi ---
+  disable_block_break: true
+  disable_block_place: true
+  # Casse, fornaci, pulsanti, calpestio delle colture. Non blocca il click destro
+  # sugli item della hotbar: quello resta sempre attivo.
+  disable_block_interact: true
+  disable_block_burn: true
+  disable_block_fire_spread: true
+  disable_block_leaf_decay: true
+
+  # Vietati anche quando disable_block_place e false. Serve per lasciare attivo il
+  # modulo lobby-blocks tenendo fuori tutto il resto.
+  blocked_place:
+    - BELL

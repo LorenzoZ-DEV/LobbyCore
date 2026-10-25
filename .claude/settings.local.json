@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(java -version)",
+      "Bash(mvn -version)",
+      "Bash(git --version)",
+      "Bash(unzip -l lobby-utils-1.0-SNAPSHOT.jar)",
+      "Bash(cp SMPLibrary/gradlew SMPLibrary/gradlew.bat LobbyCore/)",
+      "Bash(cp SMPLibrary/gradle/wrapper/gradle-wrapper.jar LobbyCore/gradle/wrapper/)",
+      "Bash(python -c ' *)",
+      "Bash(python -)",
+      "Bash(./gradlew compileJava --no-daemon)",
+      "Bash(./gradlew shadowJar --no-daemon)",
+      "Bash(unzip -l LobbyCore-1.0.0.jar)",
+      "Bash(curl -s \"https://api.papermc.io/v2/projects/paper\")",
+      "Bash(curl -s \"https://fill.papermc.io/v3/projects/paper/versions/1.21.11/builds\" -H \"User-Agent: lobbycore-build-check\" -o b3.json)",
+      "Artifact",
+      "Bash(taskkill //F //IM java.exe)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://127.0.0.1:8085/?token=testtoken1234\")",
+      "Bash(awk '{print $4}')",
+      "Bash(awk 'NF>=4 && $1 ~ /^[0-9]+$/ {split\\($4,a,\"/\"\\); s[a[1]]+=$1} END {for \\(k in s\\) printf \"%10d  %s\\\\n\", s[k], k}')",
+      "Bash(node --check src/main/resources/web/app.js)",
+      "Bash(python panel_test.py)",
+      "Bash(python add_panel_docs.py)",
+      "Bash(unzip -l build/libs/LobbyCore-1.0.0.jar)"
+    ]
+  }
+}

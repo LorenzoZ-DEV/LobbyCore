@@ -1,0 +1,142 @@
+config-version: 1
+# ==========================================================================================
+#  LobbyCore - configurazione principale
+#
+#  Ogni modulo ha il suo file dentro modules/. Qui si decide solo quali moduli partono,
+#  come si chiama questa lobby sulla rete, e come si collega a database e Redis.
+#
+#  IMPORTANTE: database e redis NON vengono riavviati da /lobbycore reload. Se li modifichi
+#  serve un restart del server.
+# ==========================================================================================
+
+settings:
+  # Il nome di QUESTA lobby sulla rete. Deve essere diverso su ogni server, altrimenti
+  # la chat cross-lobby scarta i messaggi credendoli i propri e il conteggio rete sbaglia.
+  server-name: "lobby-1"
+
+  # Log piu verboso: mostra l'avvio di ogni modulo e gli errori di pubblicazione su Redis.
+  debug: false
+
+# ------------------------------------------------------------------------------------------
+#  Moduli. true = parte all'avvio. Si possono accendere e spegnere a caldo con
+#  /lobbycore module <id> <on|off> (senza salvare qui).
+# ------------------------------------------------------------------------------------------
+modules:
+  # Decide in quali mondi vale tutto il resto: tienilo acceso.
+  disabled-worlds: true
+  world-settings: true
+  spawn: true
+
+  player-hider: true
+  hotbar: true
+  join: true
+
+  double-jump: true
+  launchpad: true
+  anti-wdl: true
+
+  lobby-blocks: true
+  teleport-bow: false
+  hub-pvp: true
+
+  chat: true
+  chat-filter: true
+  announcements: true
+
+  scoreboard: true
+  tablist: true
+
+  # Pannello web di amministrazione. Si configura in modules/web.yml.
+  web: true
+
+# ------------------------------------------------------------------------------------------
+#  Log delle azioni dei giocatori.
+#
+#  E un anello in memoria, non un archivio: tiene le ultime `capacity` voci e le mostra nel
+#  pannello e con /lobbycore activity [giocatore]. Continua a registrare anche con il
+#  pannello spento.
+#
+#  I tipi rumorosi (block, bow) sono spenti di default: in una lobby piena spingerebbero
+#  fuori tutto il resto in pochi secondi.
+# ------------------------------------------------------------------------------------------
+activity:
+  enabled: true
+  capacity: 500
+
+  track:
+    join: true          # entrate, con l'indirizzo IP
+    quit: true          # uscite, con la durata della sessione
+    command: true       # solo la parola del comando, mai gli argomenti
+    chat: true
+    menu: true          # menu aperti e pulsanti premuti
+    hotbar: true        # item della hotbar cliccati
+    hider: true
+    pvp: true
+    kill: true
+    switch: true        # passaggi ad altri server via proxy
+    blocked: true       # messaggi e comandi fermati dal filtro
+    panel: true         # azioni fatte dal pannello web
+    block: false        # ogni blocco piazzato
+    bow: false          # ogni teletrasporto con l'arco
+
+# ------------------------------------------------------------------------------------------
+#  Cattura degli errori.
+#
+#  Aggancia un handler al logger radice, quindi vede anche gli errori degli ALTRI plugin —
+#  di solito e' esattamente quello che serve. Errori identici vengono raggruppati con un
+#  contatore invece che ripetuti.
+# ------------------------------------------------------------------------------------------
+errors:
+  enabled: true
+  capacity: 100
+  # false = solo SEVERE. Utile se un plugin rumoroso riempie la lista di warning.
+  capture_warnings: true
+
+# ------------------------------------------------------------------------------------------
+#  Database (HikariCP). Tiene preferenza "nascondi giocatori", statistiche PvP e playtime.
+#
+#  sqlite  -> nessuna configurazione, file locale. Giusto per una lobby singola.
+#  mysql   -> le preferenze seguono il giocatore da lobby-1 a lobby-2. Giusto per una rete.
+#  Entrambi i driver sono gia dentro il jar: non serve installare nulla.
+# ------------------------------------------------------------------------------------------
+database:
+  type: sqlite          # sqlite | mysql | mariadb
+  name: "lobbycore"     # nome del file (sqlite) o del database (mysql)
+  prefix: "lobby_"
+
+  host: "127.0.0.1"
+  port: 3306
+  username: "root"
+  password: ""
+  params: "useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=utf8"
+
+  pool:
+    maximum-pool-size: 10
+    minimum-idle: 2
+    connection-timeout: 30000
+    idle-timeout: 600000
+    max-lifetime: 1800000
+    # Mettilo a 10000 solo per indagare una perdita di connessioni: costa prestazioni.
+    leak-detection-threshold: 0
+
+# ------------------------------------------------------------------------------------------
+#  Redis. E il bus fra le lobby: chat cross-server, lista giocatori della rete per il
+#  tab-complete e il conteggio %lobbycore_network_online%.
+#
+#  Se e spento o irraggiungibile la lobby funziona lo stesso, solo in locale.
+# ------------------------------------------------------------------------------------------
+redis:
+  enabled: false
+  host: "127.0.0.1"
+  port: 6379
+  username: ""
+  password: ""
+  use-ssl: false
+
+  # Prefisso delle chiavi con la lista giocatori di ogni server.
+  roster-key: "lobbycore:players"
+
+  pool:
+    max-total: 8
+    max-idle: 4
+    min-idle: 1

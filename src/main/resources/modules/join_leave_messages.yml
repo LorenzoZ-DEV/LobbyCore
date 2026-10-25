@@ -1,0 +1,32 @@
+config-version: 1
+# Messaggi e azioni di entrata/uscita.
+#
+# Una stringa vuota ("") significa "non mandare niente": e cosi che si toglie il messaggio
+# di uscita senza spegnere il modulo.
+
+join_leave_messages:
+  join_message: "&r%luckperms_prefix%%player% &fe entrato in lobby"
+  quit_message: ""
+  # Usato solo alla primissima entrata. Vuoto = usa join_message anche la prima volta.
+  first_join_message: "&r&#9863E7✦ &f%player% &7si e unito a VenrixMC per la prima volta!"
+
+# Azioni eseguite quando un giocatore entra. Stesse azioni disponibili negli item hotbar.
+# [CLEARCHAT] spinge fuori schermo la chat precedente prima del blocco di benvenuto.
+join_events:
+  - "[SOUND] BLOCK_NOTE_BLOCK_CHIME;1;1.2"
+  - "[GAMEMODE] survival"
+  - "[CLEARCHAT] 60"
+  - "[MESSAGE] &#9863E7&l▬▬▬▬▬▬&#A05DE0&l▬&#A856DA&l▬&#B050D3&l▬&#B849CD&l▬&#C043C6&l▬&#C83DBF&l▬&#CF36B9&l▬&#D730B2&l▬&#DF2AAB&l▬&#E723A5&l▬&#EF1D9E&l▬&#F71698&l▬&#FF1091&l▬&#9863E7&l▬▬▬▬▬▬&#A05DE0&l▬&#A856DA&l▬&#B050D3&l▬&#B849CD&l▬&#C043C6&l▬&#C83DBF&l▬&#CF36B9&l▬&#D730B2&l▬&#DF2AAB&l▬&#E723A5&l▬&#EF1D9E&l▬&#F71698&l▬&#FF1091&l▬"
+  - "[MESSAGE] "
+  - "[MESSAGE]               &d&lVENRIXMC &7[&dIV&7]"
+  - "[MESSAGE] &fSeleziona una modalita con la &dBussola &fo con &dl'NPC"
+  - "[MESSAGE] "
+  - "[MESSAGE] &5&lLIVE: &f&nhttps://www.tiktok.com/@venrixmc"
+  - "[MESSAGE] &e&lSTORE: &f&nhttps://store.venrixmc.uk"
+  - "[MESSAGE] &d&lDISCORD: &f&nhttps://discord.gg/drHwd3Pb4G"
+  - "[MESSAGE] "
+  - "[MESSAGE] &#9863E7&l▬▬▬▬▬▬&#A05DE0&l▬&#A856DA&l▬&#B050D3&l▬&#B849CD&l▬&#C043C6&l▬&#C83DBF&l▬&#CF36B9&l▬&#D730B2&l▬&#DF2AAB&l▬&#E723A5&l▬&#EF1D9E&l▬&#F71698&l▬&#FF1091&l▬&#9863E7&l▬▬▬▬▬▬&#A05DE0&l▬&#A856DA&l▬&#B050D3&l▬&#B849CD&l▬&#C043C6&l▬&#C83DBF&l▬&#CF36B9&l▬&#D730B2&l▬&#DF2AAB&l▬&#E723A5&l▬&#EF1D9E&l▬&#F71698&l▬&#FF1091&l▬"
+  - "[EFFECT] SPEED;2"
+
+# Eseguite al posto di join_events alla primissima entrata. Vuoto = usa join_events.
+first_join_events: []

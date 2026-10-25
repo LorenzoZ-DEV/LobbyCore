@@ -1,0 +1,24 @@
+config-version: 1
+# Pedane di lancio.
+#
+# Il trigger e il movimento, non il click: il modulo world-settings blocca
+# l'interazione con i blocchi e mangerebbe la pressione della pedana.
+
+launchpad:
+  power: 2.0
+  vertical_power: 1.0
+
+  # Su quali blocchi scatta. Mettine di riconoscibili: un giocatore deve capire
+  # a vista dove sta per essere lanciato.
+  blocks:
+    - HEAVY_WEIGHTED_PRESSURE_PLATE
+    - LIGHT_WEIGHTED_PRESSURE_PLATE
+
+  sound:
+    name: ENTITY_BAT_TAKEOFF
+    volume: 1.0
+    pitch: 1.0
+
+  particle:
+    type: CLOUD
+    count: 25

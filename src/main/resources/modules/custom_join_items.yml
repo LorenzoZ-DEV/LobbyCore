@@ -1,0 +1,67 @@
+config-version: 1
+# Item della hotbar.
+#
+# Ogni voce occupa uno slot fisso (0-8) e reagisce al click destro eseguendo la sua lista
+# di azioni. Gli item vengono marchiati internamente, quindi funzionano anche se un
+# giocatore li rinomina e non si confondono con oggetti uguali di altri plugin.
+#
+# Attenzione agli slot. Occupati da altri moduli:
+#   0  lobby-blocks (blocchi magici)      1  teleport-bow (arco)
+#   7  hub-pvp (spada)                    8  player-hider (nascondi giocatori)
+# Liberi per gli item qui sotto: 2, 3, 4, 5, 6.
+# Se due moduli chiedono lo stesso slot l'ultimo che scrive vince, e in console compare
+# un avviso all'avvio.
+#
+# AZIONI DISPONIBILI
+#   [MESSAGE] testo              [BROADCAST] testo
+#   [ACTIONBAR] testo            [TITLE] titolo;sottotitolo;fadein;stay;fadeout
+#   [SOUND] NOME;volume;pitch    [EFFECT] SPEED;1
+#   [MENU] serverselector        [CLOSE]
+#   [PROXY] smp-s4               [TELEPORT] world;x;y;z;yaw;pitch
+#   [PLAYER_CMD] spawn           [CONSOLE_CMD] say ciao
+#   [GAMEMODE] survival          [SPAWN]
+#   [DELAY] 20                   (mette in pausa il resto della lista, in tick)
+
+custom_join_items:
+  give_on_join: true
+  # Ritardo in tick prima di consegnare gli item: lascia finire agli altri plugin il
+  # ripristino dell'inventario, altrimenti sovrascrivono i nostri.
+  give_delay_ticks: 2
+  # Svuota l'inventario prima di consegnare. Tienilo false se altri plugin ci mettono roba.
+  clear_inventory_before: false
+  # Impedisce di spostare, trascinare o buttare gli item della hotbar.
+  disable_inventory_movement: true
+
+  items:
+    server_selector:
+      material: COMPASS
+      amount: 1
+      slot: 4
+      display_name: "&x&2&9&c&7&f&8Server Selector &7[Click Destro]"
+      lore: []
+      actions:
+        - "[MENU] serverselector"
+
+    lobby_selector:
+      material: CLOCK
+      amount: 1
+      slot: 2
+      display_name: "&x&f&c&f&a&3&bLobby Selector &7[Click Destro]"
+      lore: []
+      actions:
+        - "[MENU] lobbyselector"
+
+    information:
+      material: BELL
+      amount: 1
+      slot: 6
+      display_name: "&x&d&a&6&2&f&8Informazioni &7[Click Destro]"
+      lore: []
+      actions:
+        - "[MESSAGE] &r"
+        - "[MESSAGE] &x&d&a&6&2&f&8&lINFORMAZIONI SERVER"
+        - "[MESSAGE] &r"
+        - "[MESSAGE] &a☀ &7Store: &fstore.venrixmc.uk"
+        - "[MESSAGE] &9★ &7Discord: &fdiscord.gg/prwGuP96XW"
+        - "[MESSAGE] &r"
+        - "[SOUND] BLOCK_NOTE_BLOCK_CHIME;1;1.4"

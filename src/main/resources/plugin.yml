@@ -1,0 +1,75 @@
+name: LobbyCore
+prefix: LobbyCore
+version: '${version}'
+main: dev.lorenzzz.lobbycore.LobbyCore
+api-version: '1.21'
+load: POSTWORLD
+authors: [ Lorenzzz ]
+description: Core unico delle lobby VenrixMC - moduli, menu, chat Redis, PvP, tab e scoreboard.
+website: https://venrixmc.uk
+
+softdepend:
+  - PlaceholderAPI
+  - LuckPerms
+  # I world manager caricano i loro mondi nel proprio onEnable: stando dopo di loro il mondo
+  # dello spawn c'e gia quando leggiamo spawn.yml. Se manca lo risolviamo comunque piu tardi,
+  # ma cosi non compare nemmeno l'avviso in console.
+  - Multiverse-Core
+  - MultiWorld
+  - My_Worlds
+
+permissions:
+  lobbycore.admin:
+    description: Accesso a /lobbycore e a tutti i sottocomandi
+    default: op
+  lobbycore.panel:
+    description: Genera un link con token per il pannello web
+    default: op
+  lobbycore.setspawn:
+    description: Imposta lo spawn della lobby
+    default: op
+  lobbycore.spawn.others:
+    description: Manda altri giocatori allo spawn
+    default: op
+
+  lobbycore.bypass.world:
+    description: Ignora le protezioni del mondo della lobby
+    default: op
+  lobbycore.bypass.wdl:
+    description: Non viene bloccato da World Downloader
+    default: false
+  lobbycore.chat.bypass:
+    description: Ignora filtro parole, cooldown e chat lock
+    default: op
+  lobbycore.chat.color:
+    description: Puo usare i colori in chat
+    default: false
+
+  lobbycore.hider.bypass:
+    description: Resta visibile anche a chi nasconde i giocatori
+    default: op
+  lobbycore.doublejump:
+    description: Puo usare il doppio salto quando richiede permesso
+    default: true
+  lobbycore.teleportbow.use:
+    description: Puo usare l'arco teletrasporto
+    default: true
+  lobbycore.teleportbow.bypass:
+    description: Ignora il cooldown dell'arco
+    default: op
+
+  lobbycore.gamemode.survival:
+    description: /gms
+    default: op
+  lobbycore.gamemode.creative:
+    description: /gmc
+    default: op
+  lobbycore.gamemode.adventure:
+    description: /gma
+    default: op
+  lobbycore.gamemode.spectator:
+    description: /gmsp
+    default: op
+  lobbycore.gamemode.others:
+    description: Cambia la modalita di gioco ad altri
+    default: op

@@ -1,0 +1,71 @@
+config-version: 1
+# ==========================================================================================
+#  LobbyCore - messaggi
+#
+#  Si possono usare insieme i codici classici (&a, &#RRGGBB) e i tag MiniMessage
+#  (<gradient:#9863E7:#FF1091>, <shadow:#000000:1>, <bold>). Vengono convertiti e
+#  interpretati in un'unica passata.
+#
+#  {prefix} viene sostituito con la voce prefix qui sotto.
+#  Una voce vuota ("") non viene inviata affatto: e il modo per zittire un messaggio.
+# ==========================================================================================
+
+prefix: "&#9863E7&lLOBBY &8» &7"
+
+# Dove finiscono i messaggi del plugin: lo spawn, l'arco, il nascondi giocatori, il PvP...
+#   chat       solo in chat
+#   actionbar  solo sopra la hotbar
+#   both       tutti e due
+#
+# La action bar e una riga sola e corta: con 'both' i messaggi lunghi si vedono interi in
+# chat e tagliati sopra la hotbar. La console legge sempre la chat, action bar non ne ha.
+delivery: both
+
+# --------------------------------------------------------------------------- generici
+no-permission: "{prefix}&cNon hai il permesso per farlo."
+players-only: "{prefix}&cQuesto comando e solo per i giocatori."
+player-not-found: "{prefix}&cIl giocatore &f%player%&c non e online."
+reload-done: "{prefix}&aRicaricato: &f%modules%&a moduli attivi &8(&f%ms%ms&8)"
+
+# ----------------------------------------------------------------------------- spawn
+spawn-set: "{prefix}&aSpawn della lobby impostato dove ti trovi."
+spawn-not-set: "{prefix}&cNessuno spawn impostato. Usa &f/setspawn&c."
+spawn-teleported: "{prefix}&aSei tornato allo spawn."
+spawn-teleported-other: "{prefix}&a%player% e stato mandato allo spawn."
+
+# ------------------------------------------------------------------------- gamemode
+gamemode-changed: "{prefix}&aModalita di gioco: &f%gamemode%"
+gamemode-changed-other: "{prefix}&aModalita di &f%player%&a: &f%gamemode%"
+
+# --------------------------------------------------------------------- player hider
+hider-hidden: "{prefix}&cGiocatori nascosti."
+hider-shown: "{prefix}&aGiocatori visibili."
+hider-cooldown: "{prefix}&cAspetta ancora &f%seconds%s&c."
+
+# --------------------------------------------------------------------- lobby blocks
+blocks-region-denied: "{prefix}&cQui non puoi piazzare blocchi."
+
+# ---------------------------------------------------------------------- teleport bow
+bow-cooldown: "{prefix}&cDevi aspettare &f%seconds%s&c prima di riusare l'arco."
+bow-no-permission: "{prefix}&cNon puoi usare l'arco teletrasporto."
+
+# ------------------------------------------------------------------------- hub pvp
+pvp-activated: "&4&lPVP &8➟ &aModalita PvP attivata!"
+pvp-deactivated: "&4&lPVP &8➟ &cModalita PvP disattivata."
+pvp-countdown: "&4&lPVP &8➟ &fIl PvP si &aattiva &ffra &e%seconds%s&f..."
+pvp-countdown-off: "&4&lPVP &8➟ &fIl PvP si &cdisattiva &ffra &e%seconds%s&f..."
+pvp-combat-tagged: "&4&lPVP &8➟ &cSei in combattimento, non puoi uscire! &e(%seconds%s)"
+pvp-kill: "&6⚔ &e%killer% &7ha ucciso &c%victim%&7!"
+
+# ---------------------------------------------------------------------------- chat
+chat-locked: "{prefix}&cLa chat e bloccata."
+chat-lock-on: "{prefix}&cLa chat e stata bloccata da uno staffer."
+chat-lock-off: "{prefix}&aLa chat e stata sbloccata."
+chat-cooldown: "{prefix}&cVai piu piano: aspetta &f%seconds%s&c."
+chat-repeat: "{prefix}&cHai gia scritto questo messaggio."
+chat-blocked-word: "{prefix}&cIl tuo messaggio contiene parole non consentite."
+command-blocked: "{prefix}&cQuesto comando non e disponibile in lobby."
+
+# ------------------------------------------------------------------------- anti-wdl
+wdl-warning: "{prefix}&cIl download del mondo non e consentito su questo server."
+wdl-kick: "&cWorld Downloader non e consentito su VenrixMC."

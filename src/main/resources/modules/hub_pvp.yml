@@ -1,0 +1,89 @@
+config-version: 1
+# PvP opzionale in lobby (fork di a-hubpvp).
+#
+# COME FUNZIONA
+#   Tieni in mano la spada per hold_time_seconds -> parte il kit, il tuo inventario viene
+#   messo da parte e puoi combattere. Cambia slot per deactivate_time_seconds -> ti viene
+#   restituito tutto.
+#   Il danno passa solo se ENTRAMBI i giocatori hanno il PvP attivo.
+#   Dopo un colpo scatta il combat tag: finche dura non puoi uscire cambiando slot.
+#
+# Serve che il modulo world-settings NON sia l'unico a decidere: il PvP fra due giocatori
+# attivi viene consentito anche con disable_player_pvp: true.
+
+hub_pvp:
+  give_on_join: true
+  give_on_join_delay: 20
+
+  sword:
+    material: NETHERITE_SWORD
+    slot: 7
+    display_name: "&#FFCE49🗡 &#FFD49Bꜱᴘᴀᴅᴀ ᴘᴠᴘ"
+    lore:
+      - "&7Tienila in mano per entrare in PvP."
+    unbreakable: true
+    enchantments:
+      sharpness: 3
+      unbreaking: 2
+
+    hold_time_seconds: 5
+    deactivate_time_seconds: 5
+    combat_tag_seconds: 10
+
+  armor:
+    helmet:
+      material: NETHERITE_HELMET
+      display_name: "&#FFD49Bᴀʀᴍᴀᴛᴜʀᴀ ᴅᴇʟ ᴄᴀᴠᴀʟɪᴇʀᴇ"
+      unbreakable: true
+      enchantments:
+        protection: 2
+      trim:
+        enabled: true
+        pattern: SENTRY
+        material: NETHERITE
+    chestplate:
+      material: NETHERITE_CHESTPLATE
+      display_name: "&#FFD49Bᴀʀᴍᴀᴛᴜʀᴀ ᴅᴇʟ ᴄᴀᴠᴀʟɪᴇʀᴇ"
+      unbreakable: true
+      enchantments:
+        protection: 2
+      trim:
+        enabled: true
+        pattern: SENTRY
+        material: NETHERITE
+    leggings:
+      material: NETHERITE_LEGGINGS
+      display_name: "&#FFD49Bᴀʀᴍᴀᴛᴜʀᴀ ᴅᴇʟ ᴄᴀᴠᴀʟɪᴇʀᴇ"
+      unbreakable: true
+      enchantments:
+        protection: 2
+      trim:
+        enabled: true
+        pattern: SENTRY
+        material: NETHERITE
+    boots:
+      material: NETHERITE_BOOTS
+      display_name: "&#FFD49Bᴀʀᴍᴀᴛᴜʀᴀ ᴅᴇʟ ᴄᴀᴠᴀʟɪᴇʀᴇ"
+      unbreakable: true
+      enchantments:
+        protection: 2
+      trim:
+        enabled: true
+        pattern: SENTRY
+        material: NETHERITE
+
+  death_particle:
+    enabled: true
+    type: EXPLOSION
+    count: 30
+
+  sounds:
+    countdown:
+      enabled: true
+      type: BLOCK_NOTE_BLOCK_PLING
+      volume: 1.0
+      pitch: 1.5
+    activated:
+      type: ENTITY_ENDER_DRAGON_GROWL
+    deactivated:
+      type: ENTITY_EXPERIENCE_ORB_PICKUP

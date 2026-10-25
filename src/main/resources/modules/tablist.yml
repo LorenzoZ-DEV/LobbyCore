@@ -1,0 +1,67 @@
+config-version: 1
+# Tablist: header, footer, formato dei nomi e ordinamento.
+#
+# Il formato dei blocchi e quello di TAB (github.com/NEZNAMY/TAB), cosi una
+# configurazione gia scritta per quel plugin si puo incollare qui.
+
+header-footer:
+  enabled: true
+  # Quale design usare fra quelli definiti sotto.
+  design: default
+  # Ogni quanti tick aggiornare. Basso = animazioni fluide. Header e footer senza
+  # placeholder personali vengono renderizzati una volta sola per tutti.
+  update_interval: 5
+
+  designs:
+    default:
+      header:
+        - ''
+        - ''
+        - '<shadow:#000000:1>&#8825DD&lV&#8E30DF&lE&#943BE0&lN&#9A45E2&lR&#A050E3&lI&#A357E9&lX&#A65FF0&lM&#A966F6&lC'
+        - '<shadow:#000000:1>&#A36CF6ᴘʟᴀʏ.ᴠᴇɴʀɪxᴍᴄ.ᴜᴋ'
+        - ''
+        - '<shadow:#000000:1>&fʟᴏʙʙʏ: &7%lobbycore_online% &8| &fɴᴇᴛᴡᴏʀᴋ: &7%lobbycore_network_online%'
+        - ''
+      footer:
+        - '<shadow:#000000:1>&f'
+        - '<shadow:#000000:1>%animation:scritta%'
+        - ''
+        - '<shadow:#000000:1>&f      %animation:cose1%&f      '
+        - '<shadow:#000000:1>&f      %animation:cose2%&f      '
+        - '<shadow:#000000:1>&f'
+        - '<shadow:#000000:1>%animation:com%'
+        - '<shadow:#000000:1>%animation:quad%'
+        - ''
+        - ''
+
+# Nome mostrato nella tablist (non nella chat: quella la fa il modulo chat).
+name-format:
+  enabled: true
+  format: "%luckperms_prefix%%player%%luckperms_suffix%"
+
+# Nome sopra la testa: grado e colore di LuckPerms attorno al nome del giocatore.
+#
+# Funziona con gli stessi team dell'ordinamento qui sotto — sopra la testa Minecraft
+# lascia cambiare solo la cornice, il nome in mezzo resta quello vero. Restano accesi
+# anche con sorting.enabled: false, in quel caso i team esistono solo per questo.
+#
+# Senza LuckPerms prefix e suffix restano vuoti e si vede il nome liscio.
+nametags:
+  enabled: true
+  prefix: "%luckperms_prefix%"
+  suffix: "%luckperms_suffix%"
+
+# Ordinamento per peso del gruppo LuckPerms: peso piu alto = piu in alto.
+#
+# Come funziona: il client ordina la tablist per i team della scoreboard. I team stanno
+# sulla scoreboard principale, quella su cui restano tutti: la sidebar la disegna FastBoard
+# mandando pacchetti, quindi non toglie nessuno da li e basta registrarli una volta per
+# giocatore. Quando un team resta senza giocatori viene deregistrato subito, cosi non se
+# ne accumula uno per ogni persona passata dalla lobby.
+#
+# Se un altro plugin sposta i giocatori su una scoreboard sua, l'ordine lo decide lui:
+# in quel caso l'impostazione onesta e enabled: false.
+#
+# Senza LuckPerms tutti finiscono nello stesso team e l'ordine resta quello del server.
+sorting:
+  enabled: true

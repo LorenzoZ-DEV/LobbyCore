@@ -1,0 +1,29 @@
+config-version: 1
+# Cosa succede allo stato del giocatore quando entra in lobby.
+
+join_settings:
+  # Mandalo allo spawn (richiede il modulo spawn e uno spawn impostato con /setspawn).
+  spawn_join: true
+
+  heal: true
+  extinguish: true
+  clear_effects: true
+  reset_experience: true
+  # Tienilo false se altri plugin gestiscono l'inventario: il modulo hotbar scrive
+  # comunque i suoi slot senza bisogno di svuotare tutto.
+  clear_inventory: false
+
+  firework:
+    enabled: false
+    # Solo alla primissima entrata del giocatore in lobby.
+    first_join_only: true
+
+    type: BALL_LARGE
+    power: 1
+    flicker: true
+    trail: true
+    # Nomi standard (AQUA, RED, ...) oppure esadecimale #RRGGBB.
+    colors:
+      - AQUA
+      - "#9863E7"
+      - WHITE

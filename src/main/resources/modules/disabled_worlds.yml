@@ -1,0 +1,14 @@
+config-version: 1
+# In quali mondi valgono i moduli della lobby.
+#
+# invert: false -> i mondi elencati sono quelli DISATTIVATI (tutto il resto e lobby).
+# invert: true  -> i mondi elencati sono i SOLI in cui la lobby e attiva.
+#
+# Usa invert: true se sulla stessa macchina gira anche un mondo build o un mondo di test:
+# e piu sicuro elencare dove il plugin deve agire che ricordarsi ogni mondo nuovo.
+
+disabled-worlds:
+  invert: false
+  worlds:
+    - world_nether
+    - world_the_end

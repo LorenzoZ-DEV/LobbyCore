@@ -1,0 +1,100 @@
+config-version: 4
+# Doppio salto.
+#
+# Funziona armando il volo mentre il giocatore e a terra e trasformando il tentativo di
+# volare in una spinta. Chi e in creativa o spettatore non viene toccato.
+#
+# Si puo risaltare per aria: spammare il tasto e una salita. Il tetto e max_air_jumps,
+# zero per nessun tetto.
+#
+# Ogni salto in catena sale di un grado di scala maggiore e scoppia un fuoco d'artificio
+# sul posto. Le pedane di lancio sono un'altra cosa: stanno in launchpad.yml e non
+# c'entrano niente con quello che c'e qui sotto.
+
+double_jump:
+  # Spinta in avanti e verso l'alto. 1.6 / 0.75 e un salto teso: copre terreno in fretta e
+  # ridiscende presto, quindi si puo rifare spesso. Alza vertical_power se lo vuoi piu alto,
+  # sapendo che ogni decimo in piu e tempo passato per aria ad aspettare di atterrare.
+  power: 1.6
+  vertical_power: 0.75
+
+  # Millisecondi minimi fra due spinte: e questo a decidere quanto veloce si sale spammando.
+  # 100 = dieci spinte al secondo, praticamente nessun freno. Alzalo se vuoi rallentare la
+  # salita senza mettere un tetto al numero di salti.
+  cooldown_millis: 100
+
+  # Quanti doppi salti prima di dover toccare terra. 0 = illimitati, si sale finche si preme.
+  # Con un numero > 0 il conteggio si ricarica atterrando. Da tenere presente: con 0 si arriva
+  # sopra a qualsiasi tetto della lobby e fuori dalla mappa.
+  max_air_jumps: 0
+
+  # Tick fra una spinta e il momento in cui il salto torna disponibile.
+  #
+  # NON metterlo a zero. Annullare l'evento non basta a togliere il volo al client: se il
+  # permesso di volare non viene mai spento, il gioco lascia il giocatore in modalita volo e
+  # quello galleggia senza riuscire a scendere. Questi due tick sono l'istante disarmato che
+  # lo rimette a posto — spammando non si notano.
+  rearm_delay_ticks: 2
+
+  # Secondi di immunita al danno da caduta dopo ogni lancio: copre l'atterraggio del
+  # salto stesso. Vale per tutti, anche per lo staff con il bypass dei world-settings
+  # (che altrimenti si mangia ogni atterraggio). 0 = disattiva.
+  landing_protection_seconds: 10
+
+  # true = serve il permesso lobbycore.doublejump.
+  require_permission: false
+
+  # --- Combo: la scala musicale ---
+  #
+  # Ogni salto in catena sale di un grado di scala maggiore:
+  #
+  #   salto   1   2   3   4    5   6   7   8    9  10 ... 60
+  #   nota    do  re  mi  fa  sol  la  si  DO   DO  DO ... DO
+  #
+  # Dall'ottavo in poi la nota resta sul do alto. Non e una scelta: quel do e gia pitch 2.0,
+  # il massimo che Minecraft accetta, e sopra non c'e nessuna nota da suonare.
+  combo:
+    enabled: true
+    # Dopo quanti salti il conteggio riparte da do.
+    max: 60
+    # Secondi senza saltare dopo i quali la combo si azzera. E una catena, non una
+    # statistica: chi si ferma ricomincia da do.
+    reset_seconds: 10
+
+  # --- Airburst ---
+  #
+  # Un razzo vero fatto esplodere sul posto nello stesso istante in cui nasce, non un razzo
+  # che parte per aria. L'entita e silenziosa: il botto lo mette la voce sound qui sotto,
+  # cosi puo essere intonato sul grado della scala. Il danno del fuoco d'artificio e
+  # annullato sempre, anche con il god mode di world_settings spento.
+  airburst:
+    enabled: true
+    # BALL, BALL_LARGE, STAR, BURST, CREEPER.
+    shape: BALL
+    flicker: true
+    trail: true
+    # Un colore per grado della scala, do -> si. L'ultimo si ripete come fa la nota.
+    colors:
+      - '#9863E7'
+      - '#A050E3'
+      - '#C04BE0'
+      - '#E352FA'
+      - '#FF5BC8'
+      - '#FF7BA0'
+      - '#FFA36B'
+      - '#FFE066'
+
+  sound:
+    # Lo scoppio del fuoco d'artificio. Si sente solo chi salta: in una lobby piena, un botto
+    # udibile da tutti ad ogni salto altrui e insopportabile.
+    name: ENTITY_FIREWORK_ROCKET_BLAST
+    volume: 1.0
+    # Il tono di BASE, non quello finale: con la combo accesa viene moltiplicato per il grado
+    # della scala. Alzarlo o abbassarlo traspone tutta la scala, non la disattiva.
+    pitch: 1.0
+
+  # La nuvoletta sotto i piedi al momento della spinta, separata dall'airburst.
+  # count: 0 la spegne e lascia solo il fuoco d'artificio.
+  particle:
+    type: CLOUD
+    count: 20

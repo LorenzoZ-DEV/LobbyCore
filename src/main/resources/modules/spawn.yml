@@ -1,0 +1,14 @@
+config-version: 1
+# Spawn della lobby.
+#
+# Le coordinate NON stanno qui: si impostano in gioco con /setspawn e finiscono in
+# spawn.yml nella cartella del plugin. Tenerle separate evita che un reload sovrascriva
+# quello che hai impostato con il comando.
+
+spawn:
+  # Teletrasporta allo spawn appena entra (il modulo join lo chiama per te).
+  teleport_on_join: true
+  # Teletrasporta allo spawn dopo la morte.
+  teleport_on_respawn: true
+
+  sound: ENTITY_ENDERMAN_TELEPORT

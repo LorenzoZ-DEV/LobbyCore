@@ -1,0 +1,49 @@
+config-version: 2
+# Arco teletrasporto (fork di l-teleportbow).
+#
+# La freccia non fa danno: e uno strumento di movimento, non un'arma.
+#
+# Attenzione agli slot: l'arco sta nello slot 1, accanto ai blocchi magici del modulo
+# lobby-blocks (slot 0). La freccia di default NON occupa la hotbar (arrow.in_inventory):
+# l'arco ha Infinity, quindi per scoccare basta averne una nell'inventario.
+
+teleport_bow:
+  give_on_join: true
+  # Impedisce di spostare, trascinare o buttare arco e frecce.
+  protect_items: true
+
+  bow:
+    material: BOW
+    item_slot: 1
+    display_name: "&#FF5555&lᴀʀᴄᴏ ᴛᴇʟᴇᴘᴏʀᴛ &r&7(click destro)"
+    lore:
+      - "&7Scocca e finisci dove atterra la freccia."
+    unbreakable: true
+    item_flags:
+      - HIDE_ENCHANTS
+    enchantments:
+      infinity: 1
+
+  arrow:
+    # Usato solo se in_inventory e false, o se l'inventario e pieno.
+    item_slot: 3
+    amount: 1
+    # true = la freccia va nell'inventario invece che nella hotbar (consigliato: con
+    # Infinity basta averne una addosso). false = usa item_slot come prima.
+    in_inventory: true
+    trail_particle: HEART
+    trail_particle_count: 3
+
+  teleport:
+    cooldown_seconds: 3
+    particle: PORTAL
+    particle_count: 50
+    sound: ENTITY_ENDERMAN_TELEPORT
+    sound_volume: 1.0
+    sound_pitch: 1.0
+
+  permissions:
+    # true = serve il permesso qui sotto per usarlo.
+    require_use: false
+    use: "lobbycore.teleportbow.use"
+    cooldown_bypass: "lobbycore.teleportbow.bypass"

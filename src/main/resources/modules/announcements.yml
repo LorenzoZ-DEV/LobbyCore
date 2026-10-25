@@ -1,0 +1,31 @@
+config-version: 1
+# Annunci automatici.
+#
+# Ogni voce e una lista di azioni, non una stringa: un annuncio puo essere piu righe,
+# un titolo e un suono insieme. Stesse azioni degli item hotbar.
+
+announcements:
+  interval_seconds: 180
+
+  # false = rotazione fissa nell'ordine scritto qui (piu prevedibile, piu facile da
+  # controllare). true = mescolata, rimescolata alla fine di ogni giro.
+  shuffle: false
+
+  sound:
+    name: BLOCK_NOTE_BLOCK_BELL
+    volume: 0.6
+    pitch: 1.4
+
+  messages:
+    store:
+      - "[MESSAGE] "
+      - "[MESSAGE] &#9863E7&lSTORE &8» &7Sostieni il server su &fstore.venrixmc.uk"
+      - "[MESSAGE] "
+    discord:
+      - "[MESSAGE] "
+      - "[MESSAGE] &#9863E7&lDISCORD &8» &7Entra nella community: &fdiscord.gg/drHwd3Pb4G"
+      - "[MESSAGE] "
+    vote:
+      - "[MESSAGE] "
+      - "[MESSAGE] &#9863E7&lVOTA &8» &7Usa &f/vote&7 e aiuta VenrixMC a crescere."
+      - "[MESSAGE] "

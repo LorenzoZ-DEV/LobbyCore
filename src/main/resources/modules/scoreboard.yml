@@ -1,0 +1,53 @@
+config-version: 1
+# Scoreboard laterale, disegnata con FastBoard (MrMicky).
+#
+# FastBoard manda i pacchetti direttamente invece di passare da una Scoreboard di Bukkit:
+# niente sfarfallio quando si aggiorna, e soprattutto il giocatore resta sulla scoreboard
+# principale — quella su cui il modulo tablist tiene i team per l'ordinamento. Con il
+# metodo classico (una Scoreboard per giocatore) ogni ridisegno cancellava quei team.
+#
+# Si possono mescolare codici classici (&a, &#RRGGBB) e tag MiniMessage
+# (<shadow:#000000:1>, <gradient:...>): vengono uniti e interpretati insieme.
+#
+# %animation:nome% prende i frame da modules/tablist_animations.yml.
+# %lobbycore_...% sono i placeholder del plugin (network_online, kills, playtime, ...).
+#
+# <head:Nome> disegna la faccia 2D della skin nella riga (richiede client 1.21.9+,
+# su client vecchi si vede uno spazio vuoto): <head:%player%> per la testa di chi
+# guarda, <head:KimTole03> per una fissa. E un carattere come gli altri, si puo
+# mettere accanto al testo, ad esempio '<head:%player%> &#9863E7%player_name%'.
+
+scoreboard:
+  title: '<shadow:#000000:1>&#8825DD&lV&#8E30DF&lE&#943BE0&lN&#9A45E2&lR&#A050E3&lI&#A357E9&lX&#A65FF0&lM&#A966F6&lC&r'
+
+  # Ogni quanti tick viene ridisegnata. 2 tick (~0.1s) = animazioni fluide anche con
+  # frame da 100ms come %animation:logo%. I placeholder restano in cache (vedi sotto),
+  # quindi il ridisegno veloce non costa una risoluzione PAPI per giocatore ad ogni tick.
+  # Con 20 (1 volta al secondo) le animazioni avanzano "a secondi" e sembrano ferme.
+  # ATTENZIONE: questo valore nel file del server NON viene mai sovrascritto dagli
+  # aggiornamenti — se l'animazione va a scatti, controlla in console la riga
+  # "Scoreboard attiva: redraw ogni ..." e allinea il file.
+  update_interval: 2
+
+  # Per quanti millisecondi tenere in cache il testo dei placeholder gia risolti.
+  # Le animazioni NON passano da questa cache: continuano ad avanzare ad ogni disegno.
+  placeholder_cache_ttl_ms: 1500
+
+  # Nasconde la scoreboard a chi sta combattendo con il modulo hub-pvp.
+  hide_during_pvp: true
+
+  # Massimo 22 righe (il limite di FastBoard). Le righe in piu vengono ignorate
+  # con un avviso in console, invece di far fallire l'avvio del modulo.
+  lines:
+    - ''
+    - '<shadow:#000000:1>&f&l<head:%player%>&r &#9863E7%player_name%'
+    - ''
+    - '<shadow:#000000:1>&#9863E7 ▪ &fʀᴀɴᴋ: &#27bbfb%luckperms_prefix%'
+    - '<shadow:#000000:1>&#9863E7 ▪ &fᴏɴʟɪɴᴇ: &#E352FA%bungee_total%'
+    - ''
+    - '<shadow:#000000:1>&f&l<head:KimTole03>&r &#9863E7ꜱᴇʀᴠᴇʀ'
+    - ''
+    - '<shadow:#000000:1>&#27bbfb ⛏ &fꜱᴍᴘ: &#27bbfb%bungee_smp-s4%'
+    - '<shadow:#000000:1>&#9b78ff 🗡 &fꜱᴀɴᴅʙᴏx: &#9b78ff%bungee_sandbox%'
+    - ''
+    - '<shadow:#000000:1> %animation:logo%'

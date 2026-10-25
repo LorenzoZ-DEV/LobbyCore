@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LobbyCore</title>
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%239863E7'/><path d='M7 5v14h10' fill='none' stroke='%23140f1c' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+</head>
+<body data-state="loading">
+
+<!-- The lobby screenshot, held behind everything at a low opacity set in web.yml. A fixed
+     layer rather than a body background so it never scrolls with the content. -->
+<div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
+<!-- Icon sprite, inlined: the panel serves three assets and has to work on a box with no
+     internet access, so nothing is ever fetched from outside. -->
+<svg class="sprite" aria-hidden="true" focusable="false"><defs>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M13.4 12.6 19 7"/><path d="M3.3 19a10 10 0 1 1 17.4 0"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></symbol>
+  <symbol id="i-feed" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-blocks" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-tools" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 12l-9 9-3-3 9-9z"/><path d="m7 17-4-4 5-5 4 4z"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 3v6h6"/><path d="M3.5 15a9 9 0 1 0 2.1-9.4L3 8"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M3.5 13a9 9 0 1 1 2.1 6"/></symbol>
+</defs></svg>
+
+<aside class="rail">
+  <div class="brand">
+    <span class="mark" id="brand-mark" aria-hidden="true"></span>
+    <span class="brand-name" id="brand-title">LobbyCore</span>
+  </div>
+
+  <nav id="tabs" aria-label="Sezioni"></nav>
+
+  <div class="rail-foot">
+    <div class="pulse" id="link-state"><i></i><span>connessione…</span></div>
+    <button class="ghost" id="logout" type="button">
+      <svg class="ico"><use href="#i-logout"></use></svg> Esci
+    </button>
+  </div>
+</aside>
+
+<main>
+  <header class="topbar">
+    <div>
+      <h1 id="page-title">Panoramica</h1>
+      <p class="sub" id="page-sub">&mdash;</p>
+    </div>
+    <div class="topstats" id="topstats"></div>
+    <img class="server-logo" id="server-logo" alt="" hidden>
+  </header>
+
+  <!-- ============================================================ OVERVIEW -->
+  <section class="page" data-page="overview">
+    <div class="cards" id="kpis"></div>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Giocatori nel tempo</h2>
+        <span class="hint" id="chart-hint">ultima ora</span>
+      </div>
+      <canvas id="chart" height="150"></canvas>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Servizi</h2></div>
+      <div class="services" id="services"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================= PLAYERS -->
+  <section class="page" data-page="players" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Online</h2>
+        <input class="search" id="player-search" type="search" placeholder="Cerca un nome…">
+      </div>
+      <div class="scroll-x">
+        <table class="grid" id="players-table">
+          <thead><tr>
+            <th>Giocatore</th><th>Grado</th><th>Mondo</th><th>Ping</th>
+            <th>PvP</th><th>K / D</th><th>In lobby</th><th>IP</th><th></th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="empty" id="players-empty" hidden>Nessuno online.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ ACTIVITY -->
+  <section class="page" data-page="activity" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Log dei giocatori</h2>
+        <div class="row">
+          <input class="search" id="activity-search" type="search" placeholder="Filtra per nome o testo…">
+          <button class="ghost danger" id="activity-clear" type="button">
+            <svg class="ico"><use href="#i-trash"></use></svg> Svuota
+          </button>
+        </div>
+      </div>
+      <div class="chips" id="activity-types"></div>
+      <ul class="feed" id="feed"></ul>
+      <p class="empty" id="feed-empty" hidden>Nessuna attivita registrata.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================== ERRORS -->
+  <section class="page" data-page="errors" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Errori catturati</h2>
+        <button class="ghost danger" id="errors-clear" type="button">
+          <svg class="ico"><use href="#i-trash"></use></svg> Svuota
+        </button>
+      </div>
+      <div class="issues" id="issues"></div>
+      <p class="empty" id="issues-empty" hidden>Nessun errore. Tutto a posto.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================= MODULES -->
+  <section class="page" data-page="modules" hidden>
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Moduli</h2>
+        <button class="ghost" id="reload-all" type="button">
+          <svg class="ico"><use href="#i-refresh"></use></svg> Ricarica tutto
+        </button>
+      </div>
+      <div class="modules" id="modules"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================== CONFIG -->
+  <section class="page" data-page="config" hidden>
+    <div class="editor">
+      <div class="panel files">
+        <div class="panel-head"><h2>File</h2></div>
+        <ul id="file-list"></ul>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2 id="file-name">Scegli un file</h2>
+          <div class="row">
+            <button class="ghost" id="file-restore" type="button" disabled>
+              <svg class="ico"><use href="#i-undo"></use></svg> Ripristina
+            </button>
+            <button class="primary" id="file-save" type="button" disabled>
+              <svg class="ico"><use href="#i-save"></use></svg> Salva
+            </button>
+          </div>
+        </div>
+        <textarea id="file-body" spellcheck="false" placeholder="Seleziona un file a sinistra." disabled></textarea>
+        <p class="hint" id="file-hint">Il salvataggio ricarica solo cio che dipende dal file. Se lo YAML non e valido, non viene scritto nulla.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================================== TOOLS -->
+  <section class="page" data-page="tools" hidden>
+    <div class="panel">
+      <div class="panel-head"><h2>Annuncio a tutti</h2></div>
+      <textarea id="broadcast-body" rows="3" placeholder="&amp;dCiao a tutti! Funzionano i codici &amp;a&amp;l e i tag MiniMessage."></textarea>
+      <button class="primary" id="broadcast-send" type="button">Invia</button>
+    </div>
+
+    <div class="panel" id="console-panel" hidden>
+      <div class="panel-head">
+        <h2>Console</h2>
+        <span class="tag warn">accesso da operatore</span>
+      </div>
+      <div class="row">
+        <input class="search grow" id="console-input" type="text" placeholder="say ciao">
+        <button class="primary" id="console-send" type="button">Esegui</button>
+      </div>
+      <p class="hint">Il comando viene eseguito come console del server. Finisce nel log attivita.</p>
+    </div>
+
+    <div class="panel" id="console-off">
+      <div class="panel-head"><h2>Console</h2></div>
+      <p class="hint">Disattivata. Si accende con <code>web.security.allow_console</code> in
+        <code>modules/web.yml</code> &mdash; e' accesso da operatore via HTTP, quindi e' una scelta
+        esplicita e non un default.</p>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>
